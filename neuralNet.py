@@ -220,7 +220,8 @@ class FFNN():
         plt.xlabel("Epochs")
         plt.show()
     
-    def test(self, X, YTrue, optionsDislay):
+    def test(self, X, YTrue, optionsDislay=None):
+        if not optionsDisplay: optionsDisplay = ['Neuron ' + str(i) for i in range(self.network[-1].outputSize)]
         for x, yTrue in zip(X, YTrue):
             output = x
             for layer in self.network: output = layer.forward(output)
