@@ -72,4 +72,6 @@ Where `X` and `YTrue` as still defined as above, and `optionsDisplay` is the mea
 
 I haven't implement the test for recurrent neural networks, so you can't test it (unless you code it yourself)
 
+For more info, please check out the [exmaples](https://github.com/pleituer/neuralNet/tree/main/examples)
+
 **Note: This project is started and heavily influenced by a video by the YouTube channel The Independent Code, [Neural Network from Scratch | Mathematics & Python Code](https://www.youtube.com/watch?v=pauPCy_s0Ok). Thus, part of the code will be the same.**
