@@ -4,7 +4,7 @@
 
 This is an attempt to recreate neural networks by using built-in modules and numpy, no pytorch, no tensorflow
 
-Version 0.2
+Current version: v0.2
 
 Last update added:
 - testing for FFNNs
