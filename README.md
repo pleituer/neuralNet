@@ -7,10 +7,9 @@ This is an attempt to recreate neural networks by using built-in modules and num
 Current version: v0.2.1
 
 Last update added:
-- testing for FFNNs
-- visualizing for FFNNs
-- an new example ([XOR](https://github.com/pleituer/neuralNet/tree/main/examples/XOR))
-- Fixed the visualizer
+- testing for RNNs
+- moved `SGRU` to be a child of the `GRU` class
+- allowed users to create their own GRU using The `GRU` as a base class
 
 ## Current Progress
 
