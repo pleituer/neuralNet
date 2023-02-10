@@ -18,13 +18,14 @@ Implemented
 - Dense Layer
 - Activations (tanh, sigmoid, ReLu, softmax)
 - GRUs (a simplistic one with one internal weight and one internal activation function, tanh, and its called `SGRU`)
+- allowing users to implement other custom GRUs
 - LSTM (still in progress of debugging)
 - FFNNs
 - RNNs
-- Training, testing, and visualizing the outputs for FFNNs
+- Training, testing, and visualizing the outputs for FFNNs and RNNs (not visualizing yet though)
 
 Will implement
-- test function for RNNs
+- visualizing of RNNs
 - Convolutional Neural Networks
 - other GRUs
 - Transformers?
@@ -76,9 +77,9 @@ ffnn.train(X, Y, epochs=epochs, learningRate=learningRate, ErrorFunc=ErrorFunc, 
 ```
 or
 ```python
-rnn.train(X, YTrue, epochs=epochs, learningRate=learningRate, ErrorFunc=ErrorFunc)
+rnn.train(X, YTrue, epochs=epochs, learningRate=learningRate, ErrorFunc=ErrorFunc, test=True, testPercentage=0.9)
 ```
-where `X` is your training input, `Y` is your correct training output, `epochs` is the number of epochs, `learningRate` is the learningRate, and `ErrorFunc` can currently be Mean Squared Error(use `ErrorFunc="MSE"`), or Cross-Entropy Loss(use `ErrorFunc="CEL"`) And `test=True` if you wanted to give it tests (it's currently available on FFNNs, not RNNs), also specify the `testPercentage` (default is 90%) to specify how much of the data (`X` and `Y`) is used for testing.
+where `X` is your training input, `Y` is your correct training output, `epochs` is the number of epochs, `learningRate` is the learningRate, and `ErrorFunc` can currently be Mean Squared Error(use `ErrorFunc="MSE"`), or Cross-Entropy Loss(use `ErrorFunc="CEL"`) And `test=True` if you wanted to give it tests, also specify the `testPercentage` (default is 90%) to specify how much of the data (`X` and `Y`) is used for testing.
 
 ### Step 4:
 Wait & visualize
@@ -91,7 +92,7 @@ Where `X` and `Y` as still defined as above, and `optionsDisplay` is the meaning
 
 This will print out the input given to the neural network, it's predicted output and the expected output.
 
-I haven't implement testing and visualizing for recurrent neural networks, so you can't test it (unless you code it yourself)
+I haven't implement visualizing for recurrent neural networks, so you can't test it (unless you code it yourself)
 
 ## Layers
 
@@ -121,6 +122,10 @@ There are 2 types of RNNs available.
 The following will create a GRU with one internal weight and one internal activation function, thus a simplistic one (SGRU)
 ```python
 neuralNet.SGRU(inputSize, outputSize)
+```
+Or the following which will create a custom GRU
+```python
+neuralNet.GRU(inputSize, outputSize, internalSize, internalFunc, D_internalFunc, trimFunc)
 ```
 The following will creat a LSTM (currently not fully functional, you might encounter some bugs, or it might not work properly)
 ```python
