@@ -1,4 +1,11 @@
-# Current Version: v0.2
+# Current Version: v0.2.1
+
+## v0.2.1
+### Added
+
+- testing for RNNs
+- moved `SGRU` to be a child of the `GRU` class
+- allowed users to create their own GRU using The `GRU` as a base class
 
 ## v0.2 
 ### Added
