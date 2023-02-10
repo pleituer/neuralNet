@@ -154,9 +154,10 @@ class LSTM(Layer):
 
 #activation base class (softmax excluded)
 class Activation(Layer):
-    def __init__(self, activation, D_activation):
+    def __init__(self, activation, D_activation, outputSize):
         self.activation = activation
         self.D_activation = D_activation
+        self.outputSize = outputSize
     
     def forward(self, input):
         self.input = input
@@ -167,21 +168,24 @@ class Activation(Layer):
 
 #hyperbolic tangent activation layer
 class Tanh(Activation):
-    def __init__(self):
-        super().__init__(tanh, D_tanh)
+    def __init__(self, outputSize):
+        super().__init__(tanh, D_tanh, outputSize)
 
 #sigmoid activation layer
 class Sigmoid(Activation):
-    def __init__(self):
-        super().__init__(sigmoid, D_sigmoid)
+    def __init__(self, outputSize):
+        super().__init__(sigmoid, D_sigmoid, outputSize)
 
 #ReLu activation
 class ReLU(Activation):
-    def __init__(self):
-        super().__init__(relu, D_relu)
+    def __init__(self, outputSize):
+        super().__init__(relu, D_relu, outputSize)
 
 #softmax activation
 class SoftMax(Layer):
+    def __init__(self, outputSize):
+        self.outputSize = outputSize
+
     def forward(self, input):
         tmp = np.exp(input)
         self.output = tmp / np.sum(tmp)
@@ -197,38 +201,58 @@ class FFNN():
     def __init__(self, network):
         self.network = network
     
-    def train(self, X, YTrue, epochs, learningRate, ErrorFunc='MSE'):
+    def train(self, X, Y, epochs, learningRate, ErrorFunc='MSE', test=True, testPercentage=0.9):
+        if test:
+            trainX = X[:int(testPercentage*len(X))]
+            testX = X[int(testPercentage*len(X)):]
+            trainY = Y[:int(testPercentage*len(Y))]
+            testY = Y[int(testPercentage*len(Y)):]
+        else:
+            trainX = X
+            trainY = Y
         errorFunc = Errorfunctions[ErrorFunc]
         D_errorFunc = D_Errorfunctions[ErrorFunc]
         startTime = time.time()
-        errorPlot = ()
+        trainingErrorPlot = ()
+        testingErrorPlot = ()
         for e in range(epochs):
             error = 0
-            for x, yTrue in zip(X,YTrue):
+            for x, y in zip(trainX,trainY):
                 output = x
                 for layer in self.network: output = layer.forward(output)
-                error += errorFunc(yTrue, output)
-                gradient = D_errorFunc(yTrue, output)
+                error += errorFunc(y, output)
+                gradient = D_errorFunc(y, output)
                 for layer in reversed(self.network): gradient = layer.backward(gradient, learningRate)
             error /= len(X)
-            print(f'Epoch {e+1}/{epochs}, error: {error}, accuracy: {1-error}')
+            print(f'Epoch {e+1}/{epochs}, training error: {error}, training accuracy: {1-error}')
+            trainingErrorPlot += (error,)
+            error = 0
+            for x, y in zip(testX, testY):
+                output = x
+                for layer in self.network:output = layer.forward(output)
+                error += errorFunc(y, output)
+            error /= len(X)
+            print(f'Epoch {e+1}/{epochs}, testing error: {error}, testing accuracy: {1-error}')
+            testingErrorPlot += (error,)
         endTime = time.time()
         print(f'Time spent: {endTime - startTime} seconds')
-        ErrorLine = plt.plot(np.linspace(0, epochs+1, num=epochs+1), (1,)+errorPlot, label="Error")
-        AccuracyLine = plt.plot(np.linspace(0, epochs+1, num=epochs+1), [0]+[1-_ for _ in errorPlot], label="Accuracy")
-        plt.legend(["Error", "Accuracy"])
+        plt.plot(np.linspace(0, epochs+1, num=epochs+1), (1,)+trainingErrorPlot, label="Training Error")
+        plt.plot(np.linspace(0, epochs+1, num=epochs+1), [0]+[1-_ for _ in trainingErrorPlot], label="Training Accuracy")
+        plt.plot(np.linspace(0, epochs+1, num=epochs+1), (1,)+testingErrorPlot, label="Testing Error")
+        plt.plot(np.linspace(0, epochs+1, num=epochs+1), [0]+[1-_ for _ in testingErrorPlot], label="Testing Accuracy")
+        plt.legend(["Training Error", "Training Accuracy", "Testing Error", "Testing Accuracy"])
         plt.xlabel("Epochs")
         plt.show()
     
-    def test(self, X, YTrue, optionsDislay=None):
+    def visualize(self, X, Y, optionsDisplay=None):
         if not optionsDisplay: optionsDisplay = ['Neuron ' + str(i) for i in range(self.network[-1].outputSize)]
-        for x, yTrue in zip(X, YTrue):
+        for x, y in zip(X, Y):
             output = x
             for layer in self.network: output = layer.forward(output)
-            error = MSE(yTrue, output)
-            sortedOuput = sorted([(optionsDislay[_], output[_]) for _ in range(len(output))], key = (lambda x: x[1]), reverse=True)
+            error = MSE(y, output)
+            sortedOutput = sorted([(optionsDisplay[_], output[_]) for _ in range(len(output))], key = (lambda x: x[1]), reverse=True)
             print(f'Input: {[list(_) for _ in x]}')
-            for y in range(len(sortedOuput)): print(f'Output: {sortedOuput[y][0]} ({sortedOuput[y][1]})\tExpected: {float(yTrue[sortedOuput[y][0]])}')
+            for j in range(len(sortedOutput)): print(f'Output: {sortedOutput[j][0]} ({sortedOutput[j][1][0]})\tExpected: {float(y[j][0])}')
             print('-------------------')
 
 #Recurrent Neural Networks
