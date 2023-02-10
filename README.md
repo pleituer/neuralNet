@@ -95,7 +95,7 @@ I haven't implement testing and visualizing for recurrent neural networks, so yo
 
 ## Layers
 
-1. Dense
+### 1. Dense
 
 This layer can be created by passing the line
 ```python
@@ -103,7 +103,7 @@ neuralNet.Dense(inputSize, outputSize)
 ```
 This creates a dense (or linear) layer.
 
-2. Activation
+### 2. Activation
 
 These layers can be created by passing any of the following lines, depending on your own need.
 ```python
@@ -114,8 +114,7 @@ neuralNet.Softmax(outputSize) #softmax activation layer
 ```
 Any one of these line will create an activation layer, with Sigmoid, Tanh, ReLU, and Softmax to choose from.
 
-
-3. RNNs
+### 3. RNNs
 
 There are 2 types of RNNs available.
 
