@@ -72,11 +72,13 @@ Note that the activation functions are **SEPERATE** from the Dense Layer, so if 
 ### Step 3:
 Train & test
 ```python
-ffnn.train(X, Y, epochs=epochs, learningRate=learningRate, ErrorFunc=ErrorFunc, test=True, testPercentage=0.9)
+ffnn.train(X, Y, epochs=epochs, learningRate=learningRate,
+    ErrorFunc=ErrorFunc, test=True, testPercentage=0.9)
 ```
 or
 ```python
-rnn.train(X, YTrue, epochs=epochs, learningRate=learningRate, ErrorFunc=ErrorFunc, test=True, testPercentage=0.9)
+rnn.train(X, YTrue, epochs=epochs, learningRate=learningRate, 
+    ErrorFunc=ErrorFunc, test=True, testPercentage=0.9)
 ```
 where `X` is your training input, `Y` is your correct training output, `epochs` is the number of epochs, `learningRate` is the learningRate, and `ErrorFunc` can currently be Mean Squared Error(use `ErrorFunc="MSE"`), or Cross-Entropy Loss(use `ErrorFunc="CEL"`) And `test=True` if you wanted to give it tests, also specify the `testPercentage` (default is 90%) to specify how much of the data (`X` and `Y`) is used for testing.
 
