@@ -8,8 +8,9 @@ Current version: v0.2
 
 Last update added:
 - testing for FFNNs
-- visulizing for FFNNs
+- visualizing for FFNNs
 - an new example ([XOR](https://github.com/pleituer/neuralNet/tree/main/examples/XOR))
+- Fixed the visualizer
 
 ## Current Progress
 
