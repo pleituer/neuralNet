@@ -5,6 +5,7 @@
 
 - testing for RNNs
 - moved `SGRU` to be a child of the `GRU` class
+- renamed the orignial `SGRU` to be `OSGRU`
 - allowed users to create their own GRU using The `GRU` as a base class
 
 ## v0.2 
