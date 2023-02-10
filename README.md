@@ -71,7 +71,7 @@ Note that the activation functions are **SEPERATE** from the Dense Layer, so if 
 Step 3:
 Train & test
 ```python
-ffnn.train(X, Y, epochs=epochs, learningRate=learningRate, ErrorFunc=ErroFunc, test=True, testPercentage=0.9)
+ffnn.train(X, Y, epochs=epochs, learningRate=learningRate, ErrorFunc=ErrorFunc, test=True, testPercentage=0.9)
 ```
 or
 ```python
