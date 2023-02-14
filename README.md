@@ -14,10 +14,6 @@ Last update fixed
 
 - fixed the wrong implementation of SELU and PReLU
 
-Last updata Fixed
-
-- a bug where setting `test=False` will return an error
-
 ## Current Progress
 
 Implemented
