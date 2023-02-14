@@ -40,7 +40,7 @@ D_sigmoid = lambda x: sigmoid(x)*(1 - sigmoid(x))
 relu = lambda x: np.maximum(x, np.zeros(np.shape(x)))
 D_relu = lambda x: np.greater(x, np.zeros(np.shape(x)))
 
-#GeLU
+#GELU
 gelu = lambda x: x*norm.cdf(x)
 D_gelu = lambda x: norm.cdf(x) + x*norm.pdf(x)
 
@@ -270,8 +270,8 @@ class ReLU(Activation):
     def __init__(self, outputSize):
         super().__init__(relu, D_relu, outputSize)
 
-#GeLU activation layer
-class GeLU(Activation):
+#GELU activation layer
+class GELU(Activation):
     def __init__(self, outputSize):
         super().__init__(gelu, D_gelu, outputSize)
 
