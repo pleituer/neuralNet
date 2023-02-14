@@ -5,6 +5,7 @@
 #Also this is NOT OPTIMIZED, its existance is merely a challenge and for fun
 
 import numpy as np
+from scipy.stats import norm
 import matplotlib.pyplot as plt
 import time
 
@@ -19,6 +20,14 @@ def D_CEL(yTrue, y): return -yTrue/(y*np.size(yTrue))
 Errorfunctions = {'CEL':CEL, 'MSE':MSE}
 D_Errorfunctions = {'CEL':D_CEL, 'MSE':D_MSE}
 
+#identity
+identity = lambda x: x
+D_identity = lambda x: np.ones(np.shape(x))
+
+#Binary Step
+binStep = lambda x: np.greater(x, np.zeros(np.shape(x)))
+D_binStep = lambda x: np.zeros(np.shape(x))
+
 #hyperbolic tangent
 tanh = lambda x: np.tanh(x)
 D_tanh = lambda x: (1 - np.power(tanh(x), 2))
@@ -30,6 +39,38 @@ D_sigmoid = lambda x: sigmoid(x)*(1 - sigmoid(x))
 #ReLU
 relu = lambda x: np.maximum(x, np.zeros(np.shape(x)))
 D_relu = lambda x: np.greater(x, np.zeros(np.shape(x)))
+
+#GeLU
+gelu = lambda x: x*norm.cdf(x)
+D_gelu = lambda x: norm.cdf(x) + x*norm.pdf(x)
+
+#ELU
+elu = lambda x, alpha: (x>=np.zeros(np.shape(x)))*x + (x<np.zeros(np.shape(x)))*alpha*(np.exp(x)-1)
+D_elu = lambda x, alpha: (x>=np.zeros(np.shape(x)))*1 + (x<np.zeros(np.shape(x)))*alpha*np.exp(x)
+
+#SELU
+selu = lambda x: 1.0507*elu(x, 1.67326)
+D_selu = lambda x: 1.0507*D_elu(x, 167326)
+
+#Leaky ReLu
+lrelu = lambda x: np.maximum(x, 0.01*x)
+D_lrelu = lambda x: (x>=0.01*x)*1 + (x<0.01*x)*0.01
+
+#PReLU
+prelu = lambda x, alpha: (x>=np.zeros(np.shape(x)))*x + (x<np.zeros(np.shape(x)))*alpha*x
+D_prelu = lambda x, alpha: (x>=np.zeros(np.shape(x)))*1 + (x<np.zeros(np.shape(x)))*alpha
+
+#SiLU
+silu = lambda x: x*sigmoid(x)
+D_silu = lambda x: sigmoid(x) + x*D_sigmoid(x)
+
+#Gaussian
+gaussian = lambda x: np.exp(-np.power(x, 2))
+D_gaussian = lambda x: -2*x*gaussian(x)
+
+#Softplus
+softplus = lambda x: np.log(1 + np.exp(x))
+D_softplus = lambda x: 1/(1 + np.exp(-x))
 
 #base class of all the layers in the neural network
 class Layer():
@@ -204,6 +245,16 @@ class Activation(Layer):
     def backward(self, outputGradient, learningRate):
         return np.multiply(outputGradient, self.D_activation(self.input))
 
+#Identidy activation layer
+class Identity(Activation):
+    def __init__(self, outputSize):
+        super().__init__(identity, D_identity, outputSize)
+
+#Binary Step activation layer
+class BinaryStep(Activation):
+    def __init__(self, outputSize):
+        super().__init__(binStep, D_binStep, outputSize)
+
 #hyperbolic tangent activation layer
 class Tanh(Activation):
     def __init__(self, outputSize):
@@ -214,10 +265,54 @@ class Sigmoid(Activation):
     def __init__(self, outputSize):
         super().__init__(sigmoid, D_sigmoid, outputSize)
 
-#ReLu activation
+#ReLu activation layer
 class ReLU(Activation):
     def __init__(self, outputSize):
         super().__init__(relu, D_relu, outputSize)
+
+#GeLU activation layer
+class GeLU(Activation):
+    def __init__(self, outputSize):
+        super().__init__(gelu, D_gelu, outputSize)
+
+#ELU
+class ELU(Activation):
+    def __init__(self, outputSize, alpha):
+        Elu = lambda x: elu(x, alpha)
+        D_Elu = lambda x: D_elu(x, alpha)
+        super().__init__(Elu, D_Elu, outputSize)
+
+#SELU
+class SELU(Activation):
+    def __init__(self, outputSize):
+        super().__init__(selu, D_selu, outputSize)
+
+#Leaky ReLU
+class LeakyReLU(Activation):
+    def __init__(self, oututSize):
+        super().__init__(lrelu, D_lrelu, outputSize)
+
+#PReLU
+class PReLU(Activation):
+    def __init__(self, outputSize, alpha):
+        Prelu = lambda x: prelu(x, alpha)
+        D_Prelu = lambda x:D_prelu(x, apha)
+        super().__init__(Prelu, D_Prelu, outputSize)
+
+#SiLU
+class SiLU(Activation):
+    def __init__(self, outputSize):
+        super().__init__(silu, D_silu, outputSize)
+
+#Softplus activation layer
+class Softplus(Activation):
+    def __init__(self, outputSize):
+        super().__init__(softplus, D_softplus, outputSize)
+
+#Gaussian
+class Gaussian(Activation):
+    def __init__(self, outputSize):
+        super().__init__(gaussian, D_gaussian, outputSize)
 
 #softmax activation
 class SoftMax(Layer):
@@ -238,6 +333,11 @@ class SoftMax(Layer):
 class FFNN():
     def __init__(self, network):
         self.network = network
+    
+    def forward(self, x):
+        output = x
+        for layer in self.network: output = layer.forward(output)
+        return output
     
     def train(self, X, Y, epochs, learningRate, ErrorFunc='MSE', test=True, testPercentage=0.9):
         #split test and train data
@@ -276,21 +376,22 @@ class FFNN():
             print(f'Epoch {e+1}/{epochs}, training error: {error}, training accuracy: {1-error}')
             #stores error
             trainingErrorPlot += (error,)
-            #resets error
-            error = 0
-            #loops through testing data
-            for x, y in zip(testX, testY):
-                #forward
-                output = x
-                for layer in self.network:output = layer.forward(output)
-                error += errorFunc(y, output)
-                #no backwards for test
-            #normalizes error
-            error /= len(X)
-            #prints error
-            print(f'Epoch {e+1}/{epochs}, testing error: {error}, testing accuracy: {1-error}')
-            #stores error
-            testingErrorPlot += (error,)
+            if test:
+                #resets error
+                error = 0
+                #loops through testing data
+                for x, y in zip(testX, testY):
+                    #forward
+                    output = x
+                    for layer in self.network:output = layer.forward(output)
+                    error += errorFunc(y, output)
+                    #no backwards for test
+                #normalizes error
+                error /= len(X)
+                #prints error
+                print(f'Epoch {e+1}/{epochs}, testing error: {error}, testing accuracy: {1-error}')
+                #stores error
+                testingErrorPlot += (error,)
         #stop timing
         endTime = time.time()
         #prints time
@@ -298,9 +399,11 @@ class FFNN():
         #plots
         plt.plot(np.linspace(0, epochs+1, num=epochs+1), (1,)+trainingErrorPlot, label="Training Error")
         plt.plot(np.linspace(0, epochs+1, num=epochs+1), [0]+[1-_ for _ in trainingErrorPlot], label="Training Accuracy")
-        plt.plot(np.linspace(0, epochs+1, num=epochs+1), (1,)+testingErrorPlot, label="Testing Error")
-        plt.plot(np.linspace(0, epochs+1, num=epochs+1), [0]+[1-_ for _ in testingErrorPlot], label="Testing Accuracy")
-        plt.legend(["Training Error", "Training Accuracy", "Testing Error", "Testing Accuracy"])
+        if test:
+            plt.plot(np.linspace(0, epochs+1, num=epochs+1), (1,)+testingErrorPlot, label="Testing Error")
+            plt.plot(np.linspace(0, epochs+1, num=epochs+1), [0]+[1-_ for _ in testingErrorPlot], label="Testing Accuracy")
+        if test: plt.legend(["Training Error", "Training Accuracy", "Testing Error", "Testing Accuracy"])
+        else: plt.legend(["Training Error", "Training Accuracy"])
         plt.xlabel("Epochs")
         plt.show()
     
@@ -365,23 +468,24 @@ class RNN():
             trainErrorPlot += (error,)
             #prints error
             print(f'Epoch {e+1}/{epochs}, training error: {error}, training accuracy: {1-error}')
-            #resets it
-            error = 0
-            #loops through each testing data
-            for x, y in zip(testX, testY):
-                #loops through each timestep of the data
-                for t in range(len(x)):
-                    #forward
-                    output = x[t]
-                    for layer in self.network: output = layer.forward(output)
-                    error += errorFunc(y[t], output)
-                    #no backward for test
-            #normalizes error
-            error /= (len(testX)*len(testX[0]))
-            #stores error
-            testErrorPlot += (error, )
-            #prints error
-            print(f'Epoch {e+1}/{epochs}, testing error: {error}, testing accuracy: {1-error}')
+            if test:
+                #resets it
+                error = 0
+                #loops through each testing data
+                for x, y in zip(testX, testY):
+                    #loops through each timestep of the data
+                    for t in range(len(x)):
+                        #forward
+                        output = x[t]
+                        for layer in self.network: output = layer.forward(output)
+                        error += errorFunc(y[t], output)
+                        #no backward for test
+                #normalizes error
+                error /= (len(testX)*len(testX[0]))
+                #stores error
+                testErrorPlot += (error, )
+                #prints error
+                print(f'Epoch {e+1}/{epochs}, testing error: {error}, testing accuracy: {1-error}')
         #stops timing
         endTime = time.time()
         #prints time
@@ -389,8 +493,10 @@ class RNN():
         #plots
         plt.plot(np.linspace(0, epochs+1, num=epochs+1), (1,)+trainErrorPlot, label="Training Error")
         plt.plot(np.linspace(0, epochs+1, num=epochs+1), [0]+[1-_ for _ in trainErrorPlot], label="Training Accuracy")
-        plt.plot(np.linspace(0, epochs+1, num=epochs+1), (1,)+testErrorPlot, label="Testing Error")
-        plt.plot(np.linspace(0, epochs+1, num=epochs+1), [0]+[1-_ for _ in testErrorPlot], label="Testing Accuracy")
-        plt.legend(["Training Error", "Training Accuracy", "Testing Error", "Testing Accuracy"])
+        if test:
+            plt.plot(np.linspace(0, epochs+1, num=epochs+1), (1,)+testErrorPlot, label="Testing Error")
+            plt.plot(np.linspace(0, epochs+1, num=epochs+1), [0]+[1-_ for _ in testErrorPlot], label="Testing Accuracy")
+        if test: plt.legend(["Training Error", "Training Accuracy", "Testing Error", "Testing Accuracy"])
+        else: plt.legend(["Training Error", "Training Accuracy"])
         plt.xlabel("Epochs")
         plt.show()
