@@ -4,12 +4,26 @@
 
 This is an attempt to recreate neural networks by using built-in modules and numpy, no pytorch, no tensorflow
 
-Current version: v0.2.1
+Current version: v0.2.2
 
-Last update added:
-- testing for RNNs
-- moved `SGRU` to be a child of the `GRU` class
-- allowed users to create their own GRU using The `GRU` as a base class
+Last update added
+
+- the following activation layers:
+  - Identity
+  - Binary Step
+  - GELU
+  - Softplus
+  - ELU
+  - SELU
+  - Leaky ReLU
+  - PReLU
+  - SiLU
+  - Gaussian
+- a new example ([Tic Tac Toe AI](https://github.com/pleituer/neuralNet/tree/main/examples/Tic%20Tac%20Toe))
+
+Last updata Fixed
+
+- a bug where setting `test=False` will return an error
 
 ## Current Progress
 
@@ -27,7 +41,6 @@ Will implement
 - visualizing of RNNs
 - Convolutional Neural Networks
 - other GRUs
-- Transformers?
 
 ## How to use:
 
@@ -37,6 +50,7 @@ Be sure to satisfy all the requirements, namely
 ```
 numpy
 matplotlib
+scipy
 ```
 
 ### Step 1:
@@ -113,6 +127,16 @@ neuralNet.Sigmoid(outputSize) #sigmoid activation layer
 neuralNet.Tanh(ouputSize) #tanh activation layer
 neuralNet.ReLU(outputSize) #ReLU activation layer
 neuralNet.Softmax(outputSize) #softmax activation layer
+neuralNet.Identity(outputSize) #Identity activation layer, x = x, just in case if anyone wanted to use
+neuralNet.BinaryStep(outputSize) #Binary Step activation layer
+neuralNet.GELU(outputSize) #GELU activation layer
+neuralNet.ELU(outputSize, alpha=alpha) #ELU activation layer
+neuralNet.SELU(outputSize) #SELU activation layer
+neuralNet.LeakyReLU(outputSize) #Leaky ReLU activation layer
+neuralNet.PReLU(outputSize, alpha=alpha) #PReLU activation layer
+neuralNet.SiLU(outputSize) #SiLU activation layer
+neuralNet.Softplus(outputSize) #Softplus activation layer
+neuralNet.Gaussian(outputSize) #Gaussian activation layer
 ```
 Any one of these line will create an activation layer, with Sigmoid, Tanh, ReLU, and Softmax to choose from.
 
