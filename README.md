@@ -4,22 +4,15 @@
 
 This is an attempt to recreate neural networks by using built-in modules and numpy, no pytorch, no tensorflow
 
-Current version: v0.2.2
+### Current version: v0.2.3
 
 Last update added
 
-- the following activation layers:
-  - Identity
-  - Binary Step
-  - GELU
-  - Softplus
-  - ELU
-  - SELU
-  - Leaky ReLU
-  - PReLU
-  - SiLU
-  - Gaussian
-- a new example ([Tic Tac Toe AI](https://github.com/pleituer/neuralNet/tree/main/examples/Tic%20Tac%20Toe))
+- How-To's in each of the examples
+
+Last update fixed
+
+- fixed the wrong implementation of SELU and PReLU
 
 Last updata Fixed
 
