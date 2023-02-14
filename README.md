@@ -119,10 +119,10 @@ neuralNet.Softmax(outputSize) #softmax activation layer
 neuralNet.Identity(outputSize) #Identity activation layer, x = x, just in case if anyone wanted to use
 neuralNet.BinaryStep(outputSize) #Binary Step activation layer
 neuralNet.GELU(outputSize) #GELU activation layer
-neuralNet.ELU(outputSize, alpha=alpha) #ELU activation layer
+neuralNet.ELU(outputSize) #ELU activation layer
 neuralNet.SELU(outputSize) #SELU activation layer
 neuralNet.LeakyReLU(outputSize) #Leaky ReLU activation layer
-neuralNet.PReLU(outputSize, alpha=alpha) #PReLU activation layer
+neuralNet.PReLU(outputSize) #PReLU activation layer
 neuralNet.SiLU(outputSize) #SiLU activation layer
 neuralNet.Softplus(outputSize) #Softplus activation layer
 neuralNet.Gaussian(outputSize) #Gaussian activation layer
