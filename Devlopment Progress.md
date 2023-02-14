@@ -1,6 +1,6 @@
 # Current Version: v0.2.1
 
-## v0.2.1
+## v0.2.1 (Feb 10, 2023)
 ### Added
 
 - testing for RNNs
@@ -8,7 +8,7 @@
 - renamed the orignial `SGRU` to be `OSGRU`
 - allowed users to create their own GRU using The `GRU` as a base class
 
-## v0.2 
+## v0.2 (Feb 10, 2023)
 ### Added
 
 - testing for FFNNs
@@ -19,7 +19,7 @@
 
 the visualizer (previously `test` function)
 
-## v0.1 
+## v0.1 (Feb 8, 2023)
 ### Added
 
 - Dense Layer
