@@ -1,4 +1,24 @@
-# Current Version: v0.2.1
+# Current Version: v0.2.2
+
+## v0.2.2 (Feb 14, 2023)
+### Added
+
+- the following activation layers:
+  - Identity
+  - Binary Step
+  - GELU
+  - Softplus
+  - ELU
+  - SELU
+  - Leaky ReLU
+  - PReLU
+  - SiLU
+  - Gaussian
+- a new example (Tic Tac Toe AI)
+
+### Fixed
+
+- a bug where setting `test=False` will return an error
 
 ## v0.2.1 (Feb 10, 2023)
 ### Added
