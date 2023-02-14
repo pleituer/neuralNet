@@ -14,7 +14,7 @@
   - PReLU
   - SiLU
   - Gaussian
-- a new example (Tic Tac Toe AI)
+- a new example ([Tic Tac Toe AI](https://github.com/pleituer/neuralNet/tree/main/examples/Tic%20Tac%20Toe))
 
 ### Fixed
 
