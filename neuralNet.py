@@ -277,10 +277,15 @@ class GELU(Activation):
 
 #ELU
 class ELU(Activation):
-    def __init__(self, outputSize, alpha):
-        Elu = lambda x: elu(x, alpha)
-        D_Elu = lambda x: D_elu(x, alpha)
+    def __init__(self, outputSize):
+        self.alpha = np.random.randn(1)[0]
+        Elu = lambda x: elu(x, self.alpha)
+        D_Elu = lambda x: D_elu(x, self.alpha)
         super().__init__(Elu, D_Elu, outputSize)
+
+    def backward(self, outputGradient, learningRate):
+        self.alpha -= (self.input<np.zeros(np.shape(self.input)))*learningRate*outputGradient*(np.exp(self.input)-1)
+        return np.multiply(outputGradient, self.D_activation(self.input))
 
 #SELU
 class SELU(Activation):
@@ -294,10 +299,15 @@ class LeakyReLU(Activation):
 
 #PReLU
 class PReLU(Activation):
-    def __init__(self, outputSize, alpha):
-        Prelu = lambda x: prelu(x, alpha)
-        D_Prelu = lambda x:D_prelu(x, apha)
+    def __init__(self, outputSize):
+        self.alpha = np.random.randn(1)[0]
+        Prelu = lambda x: prelu(x, self.alpha)
+        D_Prelu = lambda x:D_prelu(x, self.alpha)
         super().__init__(Prelu, D_Prelu, outputSize)
+    
+    def backward(self, outputGradient, learningRate):
+        self.alpha -= (self.input<snp.zeros(np.shape(self.input)))*leaningRate*outputGradient*self.input
+        return np.multiply(outputGradient, self.D_activation(self.input))
 
 #SiLU
 class SiLU(Activation):
