@@ -18,3 +18,7 @@ Or you can just play with the minimax algorithm by the command
 ```
 ~$ python3 ticTacToePlay.py
 ```
+
+When interacting, the format for input is: `> {column} {row}`
+
+For example, entering `2 1` will mean your desired spot is column 2, row 1. Both row and column starts counting from 0, so `0 0` will mean the top left corner, `2 0` will mean the top right corner.
