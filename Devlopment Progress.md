@@ -1,4 +1,13 @@
-# Current Version: v0.2.2
+# Current Version: v0.2.3
+
+## v0.2.3 (Feb 14, 2023)
+### Added
+
+- How-To's in each of the examples
+
+### Fixed
+
+- fixed the wrong implementation of SELU and PReLU
 
 ## v0.2.2 (Feb 14, 2023)
 ### Added
