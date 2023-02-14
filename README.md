@@ -18,7 +18,7 @@ Last update fixed
 
 Implemented
 - Dense Layer
-- Activations (tanh, sigmoid, ReLu, softmax)
+- Activations (tanh, sigmoid, ReLU, variations of ReLU, softmax, and more)
 - GRUs (a simplistic one with one internal weight and one internal activation function, tanh, and its called `SGRU`)
 - allowing users to implement other custom GRUs
 - LSTM (still in progress of debugging)
