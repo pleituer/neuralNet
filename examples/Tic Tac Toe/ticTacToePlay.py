@@ -7,7 +7,7 @@ from ticTacToeClasses import *
 
 #this is just for testing
 def play():
-    userSym = x
+    userSym = changeSym(TRAINSIDE)
     t = TicTacToe()
     user = UserPlayer(userSym)
     b = Minimax(changeSym(userSym))
