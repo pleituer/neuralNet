@@ -40,6 +40,7 @@ Be sure to satisfy all the requirements, namely
 numpy
 matplotlib
 scipy
+tensorflow //In order to load the mnist data set
 ```
 
 ### Step 1:
