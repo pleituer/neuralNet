@@ -96,6 +96,21 @@ Where `X` and `Y` as still defined as above, and `optionsDisplay` is the meaning
 
 This will print out the input given to the neural network, it's predicted output and the expected output.
 
+### Step 5:
+Save your progress
+
+After everything, you can run the line
+```python
+ffnn.save(filePath) #or rnn.save(filePath)
+```
+to save your progress, note that it is saved in a `.json` file, so make sure you file path ends in `.json`
+
+Then, you might want to continue your progress, you can load the neural network simply with the following line
+```python
+neuralNetwork = neuralNet.load(filePath)
+```
+Just make sure the `filePath` actually exist
+
 I haven't implement visualizing for recurrent neural networks, so you can't test it (unless you code it yourself)
 
 ## Layers
