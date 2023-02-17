@@ -157,7 +157,26 @@ The following will creat a LSTM (currently not fully functional, you might encou
 neuralNet.LSTM(inputSize, outputSize)
 ```
 
-These are all the current available layer types, as time goes on, I will add more layers to it!
+### 4. CNNs
+
+There are 2 types of Convolutional layers available and 2 types of pooling layers you can use
+
+```python
+neuralNet.RawConvolute(inputShape, kernalSize, depth, padding) #Convolution with stride set to 1
+neuralNet.Convolute(inputShape, kernalSize, depth, padding, stride) #If you need strides not 1
+```
+Or you may want to check out the following pooling layers
+```python
+neuralNet.MaxPool(inputShape, poolingShape, stride) #Max pooling
+neuralNet.AvgPool(inputShape, poolingShape, stride) #Average pooling
+```
+I don't know if this is a pooling layer but it functions like one:
+```python
+neuralNet.Stride(inputShape, stride) #it is a striding layer
+#and it can be used as a pooling layer, although it is incorporated in the neuralNet.Convolute object
+```
+
+These are all the current available layer types, as time goes on, I will add more different layers to it!
 
 For more info, please check out the [exmaples](https://github.com/pleituer/neuralNet/tree/main/examples)
 
