@@ -39,7 +39,10 @@ Be sure to satisfy all the requirements, namely
 numpy
 matplotlib
 scipy
-tensorflow //In order to load the mnist data set
+```
+And install using the following command
+```
+pip install -i https://test.pypi.org/simple/neuralNet
 ```
 
 ### Step 1:
