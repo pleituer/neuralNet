@@ -1,0 +1,63 @@
+{
+    "Type": "neuralNet.FFNN",
+    "LayerNum": 4,
+    "Layer 0": {
+        "Type": "neuralNet.Dense",
+        "inputSize": 2,
+        "outputSize": 3,
+        "weights": [
+            [
+                1.7484976443827167,
+                1.2526230726645877
+            ],
+            [
+                -1.5628951665269317,
+                -1.5394558152186844
+            ],
+            [
+                1.6146970087929662,
+                1.5259900027193947
+            ]
+        ],
+        "bias": [
+            [
+                -0.2862695836688189
+            ],
+            [
+                0.41215425412128565
+            ],
+            [
+                -2.3664026058638927
+            ]
+        ],
+        "wantBias": true
+    },
+    "Layer 1": {
+        "Type": "neuralNet.Tanh",
+        "outputSize": 3,
+        "alpha": null
+    },
+    "Layer 2": {
+        "Type": "neuralNet.Dense",
+        "inputSize": 3,
+        "outputSize": 1,
+        "weights": [
+            [
+                1.1820352012907944,
+                -1.4289684379523362,
+                -2.130913240837296
+            ]
+        ],
+        "bias": [
+            [
+                -1.2063448372032233
+            ]
+        ],
+        "wantBias": true
+    },
+    "Layer 3": {
+        "Type": "neuralNet.Tanh",
+        "outputSize": 1,
+        "alpha": null
+    }
+}
