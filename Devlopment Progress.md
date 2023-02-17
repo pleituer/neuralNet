@@ -1,5 +1,13 @@
 # Current Version: v0.2.3
 
+## v0.3.0 (Feb 17, 2023)
+### Added
+
+- Convolutional Neural Networks
+- Pooling Layers
+- Save & Load functions
+- New example [Solving_MNIST](https://github.com/pleituer/neuralNet/tree/main/examples/Solving_MNIST)
+
 ## v0.2.3 (Feb 14, 2023)
 ### Added
 
@@ -33,11 +41,9 @@
 ### Added
 
 - testing for RNNs
-- moved `SGRU` to be a child of the `GRU` class
-- renamed the orignial `SGRU` to be `OSGRU`
-- allowed users to create their own GRU using The `GRU` as a base class
+- Gated Recurrent Units
 
-## v0.2 (Feb 10, 2023)
+## v0.2.0 (Feb 10, 2023)
 ### Added
 
 - testing for FFNNs
