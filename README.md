@@ -20,16 +20,16 @@ Implemented
 - Dense Layer
 - Activations (tanh, sigmoid, ReLU, variations of ReLU, softmax, and more)
 - GRUs (a simplistic one with one internal weight and one internal activation function, tanh, and its called `SGRU`)
-- allowing users to implement other custom GRUs
 - LSTM (still in progress of debugging)
 - FFNNs
 - RNNs
+- CNNs
 - Training, testing, and visualizing the outputs for FFNNs and RNNs (not visualizing yet though)
 
 Will implement
 - visualizing of RNNs
-- Convolutional Neural Networks
 - other GRUs
+- Custom Layers
 
 ## How to use:
 
@@ -137,10 +137,6 @@ There are 2 types of RNNs available.
 The following will create a GRU with one internal weight and one internal activation function, thus a simplistic one (SGRU)
 ```python
 neuralNet.SGRU(inputSize, outputSize)
-```
-Or the following which will create a custom GRU
-```python
-neuralNet.GRU(inputSize, outputSize, internalSize, internalFunc, D_internalFunc, trimFunc)
 ```
 The following will creat a LSTM (currently not fully functional, you might encounter some bugs, or it might not work properly)
 ```python
