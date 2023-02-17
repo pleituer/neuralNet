@@ -13,6 +13,8 @@ import neuralNet
 #read from training data
 with open('words.txt', 'r', encoding='utf-8') as f: fullText = f.read()
 
+allWords = fullText.split('\n')[:-1]
+
 #encoding process
 chars = sorted(list(set(fullText)))
 charSize = len(chars)
@@ -49,7 +51,7 @@ def reverseModify(d): return np.where(d==[sorted(d, key=(lambda o:o[0]))[-1]])[0
 
 #tokenization
 def getBatch(split):
-    offsets = [(blockSize+1)*random.randrange(0, (len(trainData) - blockSize)//(blockSize+1)) for _ in range(trainNum)]
+    offsets = [(blockSize+1)*random.randrange(0, len(allWords)) for _ in range(trainNum)]
     x = [[modify(d) for d in trainData[i:i+blockSize-1]] for i in offsets]
     y = [[modify(d) for d in trainData[i+1:i+blockSize]] for i in offsets]
     return x, y
@@ -63,7 +65,7 @@ X = np.reshape(XTrain, (trainNum,*inputShape))
 Y = np.reshape(YTrain, (trainNum,*outputShape))
 
 #giving the ai a starting letter for testing purpose, so we know how is the performance directly
-startsWith = random.choices(chars, k=testNum)
+startsWith = random.choices(chars[1:], k=testNum)
 startsWith = [modify(stoi[t]) for t in startsWith]
 RNNtestShape = (charSize, 1)
 
@@ -71,7 +73,7 @@ RNNtestShape = (charSize, 1)
 XTest = np.reshape(startsWith, (len(startsWith), *RNNtestShape))
 
 #given a list initial letter, the following function will return a list of size+1 long letters
-def test(rnn, inputs, size):
+def visualize(rnn, inputs, size):
     outputs = ()
     for x in inputs:
         word = (x,)
@@ -85,8 +87,16 @@ def test(rnn, inputs, size):
 #the network (RNN)
 rnn = neuralNet.RNN(network)     
 rnn.train(X, Y, epochs=EpochNum, learningRate=learningRate, ErrorFunc='CEL')
-output = test(rnn, XTest, 3)
+output = visualize(rnn, XTest, 3)
 
 #reverse the encoding and tokenization process so we can understand
+visOutput = [''.join(itos[reverseModify(char)] for char in word) for word in output]
+for word in range(len(visOutput)): print(f'Word starts with Letter {visOutput[word][0]}: {visOutput[word]}')
+
+rnn.save('4_letter_word_generation.json')
+rnn2 = neuralNet.loadNeuralNet('4_letter_word_generation.json')
+
+output = visualize(rnn2, XTest, 3)
+
 visOutput = [''.join(itos[reverseModify(char)] for char in word) for word in output]
 for word in range(len(visOutput)): print(f'Word starts with Letter {visOutput[word][0]}: {visOutput[word]}')
