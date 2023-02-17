@@ -4,15 +4,14 @@
 
 This is an attempt to recreate neural networks by using built-in modules and numpy, no pytorch, no tensorflow
 
-### Current version: v0.2.3
+### Current version: v0.3
 
-Last update added
+Last Update Added
 
-- How-To's in each of the examples
-
-Last update fixed
-
-- fixed the wrong implementation of SELU and PReLU
+- Convolutional Neural Networks
+- Pooling Layers
+- Save & Load functions
+- New example [Solving_MNIST](https://github.com/pleituer/neuralNet/tree/main/examples/Solving_MNIST)
 
 ## Current Progress
 
