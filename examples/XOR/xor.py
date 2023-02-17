@@ -2,9 +2,7 @@
 #using the classical example, the XOR Gate
 
 import numpy as np
-import time
 import random
-import math
 
 import neuralNet
 
@@ -16,9 +14,9 @@ visNum = 10
 
 network = [
     neuralNet.Dense(2, 3),
-    neuralNet.Tanh(3),
+    neuralNet.Activations.Tanh(3),
     neuralNet.Dense(3, 1),
-    neuralNet.Tanh(1)
+    neuralNet.Activations.Tanh(1)
 ]
 
 #xor output generation (its not that efficient)
@@ -45,3 +43,6 @@ Yvis = np.reshape(Yvis, (visNum, *outputShape))
 ffnn = neuralNet.FFNN(network)
 ffnn.train(X, Y, epochs=Epochs, learningRate=learningRate, ErrorFunc='MSE', test=True, testPercentage=0.9)
 ffnn.visualize(Xvis, Yvis)
+ffnn.save('xorData.json')
+ffnn2 = neuralNet.loadNeuralNet('xorData.json')
+ffnn2.visualize(Xvis, Yvis)
