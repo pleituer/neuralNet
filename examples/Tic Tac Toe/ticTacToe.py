@@ -2,6 +2,7 @@ import numpy as np
 import time
 
 import neuralNet
+import neuralNet.Activations as Activations
 from ticTacToeClasses import *
 
 #epochs, learning rate
@@ -31,11 +32,11 @@ Y = np.reshape(Y, (trainNum, outputColumnSize, 1))
 #the network structure
 network = [
     neuralNet.Dense(inputColumnSize, 3*inputColumnSize),
-    neuralNet.Activations.Tanh(3*inputColumnSize),
+    Activations.Tanh(3*inputColumnSize),
     neuralNet.Dense(3*inputColumnSize, 2*outputColumnSize),
-    neuralNet.Activations.Sigmoid(2*outputColumnSize),
+    Activations.Sigmoid(2*outputColumnSize),
     neuralNet.Dense(2*outputColumnSize, outputColumnSize),
-    neuralNet.Activations.Tanh(outputColumnSize)
+    Activations.Tanh(outputColumnSize)
 ]
 
 #the neural network itself (2 lines)
