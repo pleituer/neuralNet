@@ -7,6 +7,7 @@ import numpy as np
 import time
 
 import neuralNet
+import neuralNet.Activations as Activations
 
 #loads the data
 startTime = time.time()
@@ -45,21 +46,21 @@ learningRate=0.1
 #structure is LeNet
 network = [
     neuralNet.Convolute(inputShape, kernalSize=5, depth=6, padding=2, stride=1),
-    neuralNet.Sigmoid((6,28,28)),
+    Activations.Sigmoid((6,28,28)),
     neuralNet.AvgPool((6,28,28), (2,2), 2),
     neuralNet.Convolute((6, 14, 14), kernalSize=5, depth=16, padding=0, stride=1),
-    neuralNet.Sigmoid((16, 10, 10)),
+    Activations.Sigmoid((16, 10, 10)),
     neuralNet.AvgPool((16, 10, 10), (2,2), 2),
     neuralNet.Flatten((16, 5, 5)),
     neuralNet.Dense(16*5*5, 120),
-    neuralNet.Sigmoid(120),
+    Activations.Sigmoid(120),
     neuralNet.Dense(120, 84),
-    neuralNet.Sigmoid(84),
+    Activations.Sigmoid(84),
     neuralNet.Dense(84, outputShape[0]),
-    neuralNet.SoftMax(outputShape[0])
+    Activations.SoftMax(outputShape[0])
 ]
 
 ffnn = neuralNet.FFNN(network=network)
 ffnn.trainWithTest(trainX, trainY, testX, testY, epochs=Epochs, learningRate=learningRate, ErrorFunc='CEL')
-ffnn.visualize(trainX[:10], trainY[:10], displayInput=False)
-print()
+ffnn.save('SolvingMNIST.json')
+ffnn2 = neuralNet.loadNeuralNet('SolvingMNIST.json')
