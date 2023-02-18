@@ -5,6 +5,7 @@ import numpy as np
 import random
 
 import neuralNet
+import neuralNet.Activations as Activations
 
 #configs
 Epochs = 100
@@ -14,9 +15,9 @@ visNum = 10
 
 network = [
     neuralNet.Dense(2, 3),
-    neuralNet.Activations.Tanh(3),
+    Activations.Tanh(3),
     neuralNet.Dense(3, 1),
-    neuralNet.Activations.Tanh(1)
+    Activations.Tanh(1)
 ]
 
 #xor output generation (its not that efficient)
