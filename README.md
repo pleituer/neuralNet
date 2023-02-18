@@ -66,11 +66,11 @@ where `network` is the structure of your AI, so as in the [4-letter-word-generat
 ```python
 network = [
     neuralNet.Dense(charSize, charSize),
-    neuralNet.Sigmoid(charSize),
+    neuralNet.Activations.Sigmoid(charSize),
     neuralNet.SGRU(charSize, charSize),
-    neuralNet.Tanh(charSize),
+    neuralNet.Activations.Tanh(charSize),
     neuralNet.Dense(charSize, charSize),
-    neuralNet.SoftMax(charSize)
+    neuralNet.Activations.SoftMax(charSize)
 ]
 ```
 Note that the activation functions are **SEPERATE** from the Dense Layer, so if you want an activation Layer, just don't forget to include the layer after the Dense Layer.
@@ -130,20 +130,20 @@ This creates a dense (or linear) layer.
 
 These layers can be created by passing any of the following lines, depending on your own need.
 ```python
-neuralNet.Sigmoid(outputSize) #sigmoid activation layer
-neuralNet.Tanh(ouputSize) #tanh activation layer
-neuralNet.ReLU(outputSize) #ReLU activation layer
-neuralNet.Softmax(outputSize) #softmax activation layer
-neuralNet.Identity(outputSize) #Identity activation layer, x = x, just in case if anyone wanted to use
-neuralNet.BinaryStep(outputSize) #Binary Step activation layer
-neuralNet.GELU(outputSize) #GELU activation layer
-neuralNet.ELU(outputSize) #ELU activation layer
-neuralNet.SELU(outputSize) #SELU activation layer
-neuralNet.LeakyReLU(outputSize) #Leaky ReLU activation layer
-neuralNet.PReLU(outputSize) #PReLU activation layer
-neuralNet.SiLU(outputSize) #SiLU activation layer
-neuralNet.Softplus(outputSize) #Softplus activation layer
-neuralNet.Gaussian(outputSize) #Gaussian activation layer
+neuralNet.Activations.Sigmoid(outputSize) #sigmoid activation layer
+neuralNet.Activations.Tanh(ouputSize) #tanh activation layer
+neuralNet.Activations.ReLU(outputSize) #ReLU activation layer
+neuralNet.Activations.Softmax(outputSize) #softmax activation layer
+neuralNet.Activations.Identity(outputSize) #Identity activation layer, x = x, just in case if anyone wanted to use
+neuralNet.Activations.BinaryStep(outputSize) #Binary Step activation layer
+neuralNet.Activations.GELU(outputSize) #GELU activation layer
+neuralNet.Activations.ELU(outputSize) #ELU activation layer
+neuralNet.Activations.SELU(outputSize) #SELU activation layer
+neuralNet.Activations.LeakyReLU(outputSize) #Leaky ReLU activation layer
+neuralNet.Activations.PReLU(outputSize) #PReLU activation layer
+neuralNet.Activations.SiLU(outputSize) #SiLU activation layer
+neuralNet.Activations.Softplus(outputSize) #Softplus activation layer
+neuralNet.Activations.Gaussian(outputSize) #Gaussian activation layer
 ```
 Any one of these line will create an activation layer, with Sigmoid, Tanh, ReLU, and Softmax to choose from.
 
