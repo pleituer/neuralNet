@@ -42,13 +42,14 @@ scipy
 ```
 And install using the following command
 ```
-pip install -i https://test.pypi.org/simple/neuralNet
+pip install -i https://test.pypi.org/simple/ neuralNet
 ```
 
 ### Step 1:
 Import
 ```python
 import neuralNet
+import neuralNet.Activations as Activations #this is recommended to save coding time
 ```
 
 ### Step 2:
@@ -66,11 +67,11 @@ where `network` is the structure of your AI, so as in the [4-letter-word-generat
 ```python
 network = [
     neuralNet.Dense(charSize, charSize),
-    neuralNet.Activations.Sigmoid(charSize),
+    Activations.Sigmoid(charSize),
     neuralNet.SGRU(charSize, charSize),
-    neuralNet.Activations.Tanh(charSize),
+    Activations.Tanh(charSize),
     neuralNet.Dense(charSize, charSize),
-    neuralNet.Activations.SoftMax(charSize)
+    Activations.SoftMax(charSize)
 ]
 ```
 Note that the activation functions are **SEPERATE** from the Dense Layer, so if you want an activation Layer, just don't forget to include the layer after the Dense Layer.
@@ -93,7 +94,7 @@ Wait & visualize
 
 Wait for the results to flow, and if you wanted, you can also visualize the output, as below:
 ```python
-ffnn.visualize(X, Y, optionsDisplay=optionsDisplay)
+ffnn.visualize(X, Y, optionsDisplay=optionsDisplay, displayInput=True)
 ```
 Where `X` and `Y` as still defined as above, and `optionsDisplay` is the meaning of each neuron firing, so if the first neuron fires, and it corresponds to `'Dog'`, and the second corresponds to `'Cat'`, then the `optionsDisplay` should be set as `optionsDisplay=['Dog', 'Cat']`. This is optional.
 
@@ -130,20 +131,20 @@ This creates a dense (or linear) layer.
 
 These layers can be created by passing any of the following lines, depending on your own need.
 ```python
-neuralNet.Activations.Sigmoid(outputSize) #sigmoid activation layer
-neuralNet.Activations.Tanh(ouputSize) #tanh activation layer
-neuralNet.Activations.ReLU(outputSize) #ReLU activation layer
-neuralNet.Activations.Softmax(outputSize) #softmax activation layer
-neuralNet.Activations.Identity(outputSize) #Identity activation layer, x = x, just in case if anyone wanted to use
-neuralNet.Activations.BinaryStep(outputSize) #Binary Step activation layer
-neuralNet.Activations.GELU(outputSize) #GELU activation layer
-neuralNet.Activations.ELU(outputSize) #ELU activation layer
-neuralNet.Activations.SELU(outputSize) #SELU activation layer
-neuralNet.Activations.LeakyReLU(outputSize) #Leaky ReLU activation layer
-neuralNet.Activations.PReLU(outputSize) #PReLU activation layer
-neuralNet.Activations.SiLU(outputSize) #SiLU activation layer
-neuralNet.Activations.Softplus(outputSize) #Softplus activation layer
-neuralNet.Activations.Gaussian(outputSize) #Gaussian activation layer
+Activations.Sigmoid(outputSize) #sigmoid activation layer
+Activations.Tanh(ouputSize) #tanh activation layer
+Activations.ReLU(outputSize) #ReLU activation layer
+Activations.Softmax(outputSize) #softmax activation layer
+Activations.Identity(outputSize) #Identity activation layer, x = x, just in case if anyone wanted to use
+Activations.BinaryStep(outputSize) #Binary Step activation layer
+Activations.GELU(outputSize) #GELU activation layer
+Activations.ELU(outputSize) #ELU activation layer
+Activations.SELU(outputSize) #SELU activation layer
+Activations.LeakyReLU(outputSize) #Leaky ReLU activation layer
+Activations.PReLU(outputSize) #PReLU activation layer
+Activations.SiLU(outputSize) #SiLU activation layer
+Activations.Softplus(outputSize) #Softplus activation layer
+Activations.Gaussian(outputSize) #Gaussian activation layer
 ```
 Any one of these line will create an activation layer, with Sigmoid, Tanh, ReLU, and Softmax to choose from.
 
