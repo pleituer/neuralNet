@@ -1,11 +1,10 @@
 #The following is an example to how the neuralNet can be applied
 
 import numpy as np
-import time
 import random
-import math
 
 import neuralNet
+import neuralNet.Activations as Activations
 
 #Goal: making the ai remember the 500 words in words.txt (results aren't that good, but expected from the small size of the ai)
 #I didn't split the data into train and test, as we do want it to memorize the training data
@@ -37,11 +36,11 @@ testNum = 10
 #network architecture
 network = [
     neuralNet.Dense(charSize, charSize),
-    neuralNet.Sigmoid(charSize),
+    Activations.Sigmoid(charSize),
     neuralNet.SGRU(charSize, charSize),
-    neuralNet.Tanh(charSize),
+    Activations.Tanh(charSize),
     neuralNet.Dense(charSize, charSize),
-    neuralNet.SoftMax(charSize)
+    Activations.SoftMax(charSize)
 ]
 
 #modify it to match input
