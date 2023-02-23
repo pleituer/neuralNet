@@ -1,5 +1,7 @@
 # neuralNet
 
+![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fpleituer%2FneuralNet&count_bg=%231879B8&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=Viewer+count&edge_flat=true)
+
 ## Basic Info
 
 This is an attempt to recreate neural networks by using built-in modules and numpy, no pytorch, no tensorflow
